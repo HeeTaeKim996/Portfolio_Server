@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Main">
+      <UniqueIdentifier>{1757eb62-a6db-4a62-8c31-e373794befd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JobQueue">
+      <UniqueIdentifier>{710fa65b-14d4-43bc-881b-643ef5258fa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{3f1d7aaa-d4f2-41ee-8011-1eb1cc9edded}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NetObject">
+      <UniqueIdentifier>{a8a8608c-8d4f-4e7f-a583-16c928a1f8a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DB">
+      <UniqueIdentifier>{96dd6546-a0b4-45bd-aeeb-626a82940f25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NetObject\HeightObject">
+      <UniqueIdentifier>{34e3dcfa-4e93-45e7-a1c8-5b86238f2155}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NetObject\HeightObject\Energy">
+      <UniqueIdentifier>{7373073e-1b73-477c-a7e9-73032695e327}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NetObject\HeightObject\Pivot">
+      <UniqueIdentifier>{6f0db038-5173-4e19-b87c-468886520125}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GameServer.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Lobby.cpp">
+      <Filter>JobQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>JobQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientPacketHandler.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientSession.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientSessionManager.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="NetObject.cpp">
+      <Filter>NetObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>NetObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Pivot.cpp">
+      <Filter>NetObject\HeightObject\Pivot</Filter>
+    </ClCompile>
+    <ClCompile Include="BasePivot.cpp">
+      <Filter>NetObject\HeightObject\Pivot</Filter>
+    </ClCompile>
+    <ClCompile Include="CapsuleRoom.cpp">
+      <Filter>JobQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiRoom.cpp">
+      <Filter>JobQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="DBFuncs.cpp">
+      <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="DBInitializeFuncs.cpp">
+      <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="SlickPivot.cpp">
+      <Filter>NetObject\HeightObject\Pivot</Filter>
+    </ClCompile>
+    <ClCompile Include="Energy.cpp">
+      <Filter>NetObject\HeightObject\Energy</Filter>
+    </ClCompile>
+    <ClCompile Include="BlueEnergy.cpp">
+      <Filter>NetObject\HeightObject\Energy</Filter>
+    </ClCompile>
+    <ClCompile Include="HeightObject.cpp">
+      <Filter>NetObject\HeightObject</Filter>
+    </ClCompile>
+    <ClCompile Include="LoosePivot.cpp">
+      <Filter>NetObject\HeightObject\Pivot</Filter>
+    </ClCompile>
+    <ClCompile Include="StrongBird.cpp">
+      <Filter>NetObject\HeightObject\Pivot</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Lobby.h">
+      <Filter>JobQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientPacketHandler.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientSession.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientSessionManager.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="NetObject.h">
+      <Filter>NetObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>NetObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Pivot.h">
+      <Filter>NetObject\HeightObject\Pivot</Filter>
+    </ClInclude>
+    <ClInclude Include="BasePivot.h">
+      <Filter>NetObject\HeightObject\Pivot</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>JobQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="CapsuleRoom.h">
+      <Filter>JobQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiRoom.h">
+      <Filter>JobQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="MergingRoomStruct.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryCount.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="DBFuncs.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DBInitializeFuncs.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="SlickPivot.h">
+      <Filter>NetObject\HeightObject\Pivot</Filter>
+    </ClInclude>
+    <ClInclude Include="Energy.h">
+      <Filter>NetObject\HeightObject\Energy</Filter>
+    </ClInclude>
+    <ClInclude Include="BlueEnergy.h">
+      <Filter>NetObject\HeightObject\Energy</Filter>
+    </ClInclude>
+    <ClInclude Include="HeightObject.h">
+      <Filter>NetObject\HeightObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ServerCore\Protocol.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="LoosePivot.h">
+      <Filter>NetObject\HeightObject\Pivot</Filter>
+    </ClInclude>
+    <ClInclude Include="StrongBird.h">
+      <Filter>NetObject\HeightObject\Pivot</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
