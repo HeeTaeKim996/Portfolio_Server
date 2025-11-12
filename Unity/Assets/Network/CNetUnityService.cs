@@ -15,8 +15,7 @@ namespace Network
         private ServerSession serverSession;
 
 #if __CPACKET_POOL_COUNT_CHECK
-    // ¹ö±×ÀÎÁö, CPacketBufferManagerÀÇ poolCountChecker °¡ ÂüÁ¶µÇÁö ¾ÊÀ½.. ÃßÈÄ ¼öÁ¤ ÇÊ¿ä    
-
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, CPacketBufferManagerï¿½ï¿½ poolCountChecker ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½    
 #endif
     
 
@@ -30,7 +29,6 @@ namespace Network
         {
             if(cNetworkService != null)
             {
-                Debug.Log("ÀÌ¹Ì ¼­¹ö¿Í ¿¬°áµÊ");
                 return;
             }
 

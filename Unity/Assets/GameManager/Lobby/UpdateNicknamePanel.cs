@@ -54,11 +54,9 @@ public class UpdateNicknamePanel : MonoBehaviour
     {
         if(nickNameSt == NetworkManager.instance.nickName)
         {
-            Debug.Log("동일 닉네임입니다");
         }
         else if(nickNameSt == "")
         {
-            Debug.Log("닉네임은 최소1글자 이상이어야 합니다");
         }
         else
         {

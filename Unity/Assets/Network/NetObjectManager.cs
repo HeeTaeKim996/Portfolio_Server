@@ -144,7 +144,6 @@ public class NetObjectManager : MonoBehaviour
                 break;
             default:
                 {
-                    Debug.LogError("�Ҵ���� ���� ī�װ��");
                 }
                 break;
         }
@@ -187,7 +186,6 @@ public class NetObjectManager : MonoBehaviour
             default:
                 {
                     newPivot = null;
-                    Debug.LogError("�Ҵ���� ���� ������Ʈ �ڵ�");
                 }
                 break;
         }
@@ -237,7 +235,6 @@ public class NetObjectManager : MonoBehaviour
         Byte index = msg.Pop_Byte();
         if (heightObjects[index] == null)
         {
-            Debug.Log("���� �ǹ��� ���� ��û"); // �� Capsule <-> Multi Room �����, ��Ƽ������ ȯ�濡�� ���� �� ����
             return;
         }
 
@@ -299,7 +296,7 @@ public class NetObjectManager : MonoBehaviour
 
             if (ownerId == NetworkManager.instance.playerId)
             {
-                { // ownerId = PlayerId �� �ʿ� ���� �κ�
+                { 
                     O objectCode = (O)msg.Pop_UInt16(); // Object Code
                     Vector2 playerPos = new Vector2(msg.Pop_Float(), msg.Pop_Float()); // Player Pos
                     float playerRot = msg.Pop_Float(); // Player Rot
@@ -323,7 +320,7 @@ public class NetObjectManager : MonoBehaviour
 #if _Develop
         if (heightObjects.Count != (int)E.E_CAPSULE_HEIGHT_POOL_MAX_COUNT)
         {
-            Debug.LogError("�ε��� ����ġ");
+
         }
 #endif
         heightObjects.Clear();
@@ -354,7 +351,6 @@ public class NetObjectManager : MonoBehaviour
                             heightObjects[newIndex] = tempList[previousIndex];
 
 
-                            // �� ���� ��Ƽ������ ȯ�濡�� pre �� ���, null �Ҵ�
                             heightObjects[newIndex].SwitchIndex(newIndex);
                             tempList[previousIndex] = null;
 
@@ -532,16 +528,6 @@ public class NetObjectManager : MonoBehaviour
     }
     public void Handle_ACQUIRE_ENERGY(CPacket msg)
     {
-        /*
-         * PROTOCOL
-         	enum EnergyType : UINT8
-	{ 
-		Null = 0,
-		BlueEnergy = 1,
-		RedEnergy = 2,
-	};
-         * */
-
         byte index = msg.Pop_Byte();
         byte protocol = msg.Pop_Byte();
         UInt64 playerId = msg.Pop_UInt64();

@@ -84,16 +84,12 @@ public class OnGameUIPanel : MonoBehaviour
     }
     public void OnBlueEnergyUsing()
     {
-        Debug.Log("블루에너지버튼활성화 UI 추가 예정");
     }
     public void TurnOff_BlueEnergyUsing()
     {
-
-        Debug.Log("블루에너지버튼활성화 오프 UI 추가 예정");
     }
     public void OnDeniedBlueEnergyUsing()
     {
-        Debug.Log("블루에너지 부족 버튼 추가 예정");
     }
 
     public void SetBlueEnergyValue(byte value)

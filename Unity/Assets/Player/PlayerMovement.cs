@@ -333,8 +333,6 @@ public class PlayerMovement : NetObject
                 }
                 else
                 {
-                    // �Ʒ� �� �ڵ��, �������� �˼��ؼ� �������ݷ� �ͼ� ����ǰų�,
-                    // ��ó�� Ŭ�� ��ü �˼� ���� 2��θ� ���� ���� ����
                     GameManager.instance.onGameUIPanel.OnDeniedBlueEnergyUsing();
                     Handle_DENIED_BLUE_RACKET();
                 }
@@ -562,7 +560,6 @@ public class PlayerMovement : NetObject
 
     public void Handle_DENIED_BLUE_RACKET()
     {
-        // ���� ���� �ִϸ��̼� �߰��� ������
         ChangeAnimation(AnimationName.Swing);
 
 
@@ -597,12 +594,10 @@ public class PlayerMovement : NetObject
     public void SiegeModeFiring_Sieger()
     {
         state = PS.PS_BLUE_SIEGE_FIRING;
-        // ���� �ִϸ��̼� �߰�
     }
     public void SiegeModeFiring_Flyer(Vector2 aimPos)
     {
         state = PS.PS_BLUE_SIEGE_FIRING;
-        // ���� �ִϸ��̼� �߰�
 
         if(swingCoroutine != null)
         {
@@ -633,7 +628,7 @@ public class PlayerMovement : NetObject
     public void SiegeModeFire_Sieger()
     {
         state = PS.PS_Idle;
-        ChangeAnimation(AnimationName.Swing); // ���� ��� �ٸ� �ɷ� �߰� ����
+        ChangeAnimation(AnimationName.Swing);
     }
 
     public void SiegeModeFire_Flyer(Vector2 direction)

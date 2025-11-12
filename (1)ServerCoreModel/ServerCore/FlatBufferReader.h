@@ -41,11 +41,10 @@ public:
 
 	void* AssistCopying(uint16 copyingLen);
 
-
 private:
 	BYTE* _buffer;
 	uint16 _size;
-	uint16 _pos = 4; // ※ PacketHeader의 size 4 전제
+	uint16 _pos = 4;
 };
 
 template<typename T>
@@ -54,7 +53,7 @@ inline T FlatBufferReader::Peek()
 #ifdef _DEBUG
 	if (FreeSize() < sizeof(T))
 	{
-		CRASH("할당된 사이즈를 초과하여 읽으려 함");
+		CRASH("Crash");
 	}
 #endif 
 
@@ -67,7 +66,7 @@ inline T* FlatBufferReader::ZeroCopy()
 #ifdef _DEBUG
 	if (FreeSize() < sizeof(T))
 	{
-		CRASH("할당된 사이즈를 초과하여 읽으려 함");
+		CRASH("Crash");
 	}
 #endif 
 
@@ -82,7 +81,7 @@ inline T FlatBufferReader::Read()
 #ifdef _DEBUG
 	if (FreeSize() < sizeof(T))
 	{
-		CRASH("할당된 사이즈를 초과하여 읽으려 함");
+		CRASH("Crash");
 	}
 #endif
 

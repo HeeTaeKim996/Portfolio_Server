@@ -21,7 +21,7 @@ void FlatBufferReader::Peek(void* dest, uint16 len)
 #ifdef _DEBUG
 	if (FreeSize() < len)
 	{
-		CRASH("할당된 사이즈를 초과하여 읽으려 함");
+		CRASH("Crash");
 	}
 #endif 
 	::memcpy(dest, &_buffer[_pos], len);
@@ -32,7 +32,7 @@ void FlatBufferReader::Read(void* dest, uint16 len)
 #ifdef _DEBUG
 	if (FreeSize() < len)
 	{
-		CRASH("할당된 사이즈를 초과하여 읽으려 함");
+		CRASH("Crash");
 	}
 #endif 
 	::memcpy(dest, &_buffer[_pos], len);
@@ -46,7 +46,7 @@ wstring FlatBufferReader::ReadWString()
 #ifdef _DEBUG
 	if (FreeSize() < byteLen)
 	{
-		CRASH("할당된 사이즈를 초과하여 읽으려 함");
+		CRASH("Crash");
 	}
 #endif 
 
@@ -63,7 +63,7 @@ void* FlatBufferReader::AssistCopying(uint16 copyingLen)
 #ifdef _DEBUG
 	if (FreeSize() < copyingLen)
 	{
-		CRASH("할당된 사이즈를 초과하여 읽으려 함");
+		CRASH("Crash");
 	}
 #endif 
 

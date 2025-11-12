@@ -102,16 +102,10 @@ void Listener::RegisterAccept(AcceptEvent* acceptEvent)
 	if (SocketUtils::AcceptEx(_socket, session->GetSocket(), session->_recvBuffer.WritePos(), 0,
 		sizeof(SOCKADDR_IN) + 16, sizeof(SOCKADDR_IN) + 16, OUT &byteReceived,
 		static_cast<LPOVERLAPPED>(acceptEvent)) == false)
-		/* ○ WSAID_ACCEPTEX
-			- (4) : 거의 대부분 0 사용
-			- (5) : 서버주소를 저장할 공간 크기 (+ 16은 여유분)
-			- (6) : 클라주소를 저장할 공간 크기 
-		*/
 	{
 		const int32 errCode = ::WSAGetLastError();
 		if (errCode != WSA_IO_PENDING)
 		{
-			// WSA_IO_PENDING (pending 이 아닌 에러면, 다시 RegisterAccept. pending이면, 문제 없음 )
 			RegisterAccept(acceptEvent);
 		}
 	}

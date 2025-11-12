@@ -19,11 +19,10 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void Start()
     {
-        settingPanel = FindObjectOfType<SettingPanel>(); // ※ Start 때 해야, 불필요한 서치 줄임
+        settingPanel = FindObjectOfType<SettingPanel>();
 #if _Develop
         if(settingPanel == null)
         {
-            Debug.LogError("SettingPanel을 찾을 수 없음");
         }
 #endif
     }

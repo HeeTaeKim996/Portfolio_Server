@@ -6,7 +6,6 @@ public:
 
 	static std::string WStringToString(const std::wstring& wst);
 
-
 };
 
 	

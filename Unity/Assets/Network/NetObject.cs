@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class NetObject : MonoBehaviour
 {
-
     protected  UInt16 netEnum;
 
     protected UInt64 ownerId;

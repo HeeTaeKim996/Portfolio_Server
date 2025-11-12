@@ -15,7 +15,6 @@ void Lock::WriteLock(const char* name)
 	GDeadLockProfiler->PushLock(name);
 #endif // _DEBUG
 	
-	// 동일한 스레드가 소유하고 있다면 무조건 성공
 	const uint32 lockThreadId = (_lockFlag.load() & WRITE_THREAD_MASK) >> 16;
 	if (LThreadId == lockThreadId)
 	{
@@ -23,8 +22,6 @@ void Lock::WriteLock(const char* name)
 		return;
 	}
 
-
-	// 아무도 소유하지 않을 때, 경합해서 소유권을 얻는다
 	const uint64 beginTick = GetTickCount64();
 	const uint32 desired = (LThreadId << 16) & WRITE_THREAD_MASK;
 
@@ -55,7 +52,6 @@ void Lock::WriteUnlock(const char* name)
 	GDeadLockProfiler->PopLock(name);
 #endif // _DEBUG
 
-	// 자신의 ReadLock을 다 풀기 전까지는, WriteUnlock 불가능
 	if ((_lockFlag.load() & READ_COUNT_MASK) != 0)
 	{
 		CRASH("INVALID_UNLOCK_ORDER");
@@ -75,7 +71,6 @@ void Lock::ReadLock(const char* name)
 	GDeadLockProfiler->PushLock(name);
 #endif // _DEBUG
 
-	// 동일한 스레드가 소유하고 있다면, 무조건 성공
 	const uint32 lockThreadId = (_lockFlag.load() & WRITE_THREAD_MASK) >> 16;
 	if (lockThreadId == LThreadId)
 	{
@@ -83,8 +78,6 @@ void Lock::ReadLock(const char* name)
 		return;
 	}
 
-
-	// 아무도 소유하지 않을 때, 읽기 경합해서 읽는다 - 읽기는 소유권은 갖지 않는다
 	const uint64 beginTick = GetTickCount64();
 
 	while (true)

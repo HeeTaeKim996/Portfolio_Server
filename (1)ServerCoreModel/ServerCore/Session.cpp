@@ -30,7 +30,7 @@ void Session::Send(SendBufferRef sendBuffer)
 
 	bool registerSend = false;
 
-	{ // 멀티스레드에서 _sendRegistered == false라면, RegisterSend
+	{ 
 		WRITE_LOCK;
 
 		_sendQueue.push(sendBuffer);
@@ -108,7 +108,7 @@ bool Session::RegisterConnect()
 		return false;
 	}
 
-	if (SocketUtils::BindAnyAddress(_socket, 0 /* port == 0 이면, 남는 포트 사용 의미*/) == false)
+	if (SocketUtils::BindAnyAddress(_socket, 0) == false)
 	{
 		return false;
 	}
@@ -120,10 +120,6 @@ bool Session::RegisterConnect()
 	SOCKADDR_IN sockAddr = GetService()->GetNetAddress().GetSockAddr();
 	if (SocketUtils::ConnectEx(_socket, reinterpret_cast<SOCKADDR*>(&sockAddr), sizeof(sockAddr), nullptr, 0,
 		&numOfBytes, &_connectEvent) == false)
-		/*
-			- (4) : 주로 nullptr. 연결 직후 보낼 데이터 주소
-			- (5) : 마찬가지로 주로 0. 연결 직후 보낼 데이터의 크기
-		*/
 	{
 		int32 errCode = WSAGetLastError();
 		if (errCode != WSA_IO_PENDING)
@@ -142,7 +138,6 @@ bool Session::RegisterDisconnect()
 	_disconnectEvent.owner = shared_from_this(); // ADD_REF
 
 	if (SocketUtils::DisconnectEx(_socket, &_disconnectEvent, TF_REUSE_SOCKET, 0) == false)
-		// ※ (4) : 고정 0. API 확장 대비로 있는 변수라는데, 의미 없음
 	{
 		int32 errCode = ::WSAGetLastError();
 		if (errCode != WSA_IO_PENDING)
@@ -193,7 +188,7 @@ void Session::RegisterSend()
 	_sendEvent.Init();
 	_sendEvent.owner = shared_from_this(); // ADD_REF
 
-	{ // 보낼 데이터를 sendEvent에 등록
+	{
 		WRITE_LOCK;
 
 		int32 writeSize = 0;
@@ -203,14 +198,12 @@ void Session::RegisterSend()
 
 			writeSize += sendBuffer->WriteSize();
 
-			// TODO : 예외 체크
-
 			_sendQueue.pop(); // RELEASE_REF [ SendBufferchunk ]
 			_sendEvent.sendBuffers.push_back(sendBuffer); // ADD_REF [ SendBufferchunk ]
 		}
 	}
 
-	// Scatter-Gather (데이터 한방에 보내기)
+	// Scatter-Gather
 	Vector<WSABUF> wsaBufs;
 	wsaBufs.reserve(_sendEvent.sendBuffers.size());
 	for (SendBufferRef sendBuffer : _sendEvent.sendBuffers)
@@ -224,7 +217,7 @@ void Session::RegisterSend()
 
 	DWORD numOfBytes = 0;
 	if (::WSASend(_socket, wsaBufs.data(), static_cast<DWORD>(wsaBufs.size()), OUT & numOfBytes, 0, &_sendEvent,
-		nullptr)) // ※ ::WSASend의 리턴값은 int로, 0일시 반환 성공. -1일시 실패 -> 실패시 -1 반환으로 if문 발동
+		nullptr))
 	{
 		int32 errCode = ::WSAGetLastError();
 		if (errCode != WSA_IO_PENDING)
@@ -244,7 +237,7 @@ void Session::ProcessConnect()
 
 	GetService()->AddSession(GetSessionRef());
 
-	OnConnected(); // 컨텐츠 코드에서 재정의
+	OnConnected(); 
 
 	RegisterRecv();
 }
@@ -253,7 +246,7 @@ void Session::ProcessDisconnect()
 {
 	_disconnectEvent.owner = nullptr; // RELEASE_REF
 
-	OnDisconnected(); // 컨텐츠 코드에서 재정의
+	OnDisconnected();
 	GetService()->ReleaseSession(GetSessionRef());
 }
 
@@ -274,7 +267,7 @@ void Session::ProcessRecv(int32 numOfBytes)
 	}
 
 	int32 dataSize = _recvBuffer.DataSize();
-	int32 processLen = OnRecv(_recvBuffer.ReadPos(), dataSize); // 컨텐츠 코드에서 재정의
+	int32 processLen = OnRecv(_recvBuffer.ReadPos(), dataSize);
 	if (processLen < 0 || dataSize < processLen || _recvBuffer.OnRead(processLen) == false)
 	{
 		Disconnect(L"OnRead OverFlow");
@@ -297,7 +290,7 @@ void Session::ProcessSend(int32 numOfBytes)
 		return;
 	}
 
-	OnSend(numOfBytes); // 컨텐츠 코드에서 재정의
+	OnSend(numOfBytes);
 
 	WRITE_LOCK;
 	if (_sendQueue.empty() == true)
@@ -319,7 +312,6 @@ void Session::HandleError(int32 errCode)
 		Disconnect(L"HandleError");
 		break;
 	default:
-		// TODO : Log
 		cout << "HandleError : " << errCode << endl;
 		break;
 	}

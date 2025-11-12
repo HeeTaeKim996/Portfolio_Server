@@ -26,7 +26,6 @@ void DeadLockProfiler::PushLock(const char* name)
 		lockId = _nameToId[name];
 	}
 
-	// 잡고 있는 락이 있다면
 	if (!LLockStacks.empty())
 	{
 		int32 preId = LLockStacks.top();
@@ -35,9 +34,8 @@ void DeadLockProfiler::PushLock(const char* name)
 			set<int32>& history = _lockHistory[preId];
 			if (history.find(lockId) == history.end())
 			{
-				history.insert(lockId); // 락을 풀기 전에, 추가로 잡히는, 인접한, 다음방향으로의 상이한 락 id를 기록
+				history.insert(lockId);
 				CheckCycle();
-				// ※ Lock - Unlock이 후입선출을 전제로 하기에, 이 상태에서 락은 A -> B -> C -> D(추가) 로 꼬리를 무는 구조가 된다
 			}
 		}
 	}
@@ -55,7 +53,7 @@ void DeadLockProfiler::PopLock(const char* name)
 	}
 
 	int32 lockId = _nameToId[name];
-	if (LLockStacks.top() != lockId) // ※ Lock - UnLock의 후입선출을 전제
+	if (LLockStacks.top() != lockId)
 	{
 		CRASH("INVALID_UNLOCK");
 	}
@@ -88,7 +86,6 @@ void DeadLockProfiler::Dfs(int32 here)
 
 	_discoveredOrder[here] = _discoveredCount++;
 
-	// 모든 인접한, 다음 방향으로의 정점 유무 파악
 	auto findIt = _lockHistory.find(here);
 
 	if (findIt == _lockHistory.end())
@@ -97,11 +94,9 @@ void DeadLockProfiler::Dfs(int32 here)
 		return;
 	}
 
-	// 모든 정점을 순회
 	set<int32>& history = findIt->second;
 	for (int32 there : history)
 	{
-		// 아직 방문한 적이 없다면, 방문
 		if (_discoveredOrder[there] == -1)
 		{
 			_parent[there] = here;
@@ -109,14 +104,11 @@ void DeadLockProfiler::Dfs(int32 here)
 			continue;
 		}
 
-		// here 가 there보다 먼저 발견되었다면, there는 here의 후손. (순방향/간선)
 		if (_discoveredOrder[here] <= _discoveredOrder[there])
 		{
 			continue;
 		}
 
-		// 순방향이 아니며, Dfs(there)가 아직 종료되지 않았다면, 위 Lock - Unlock의 후입선출 구조에 의해,
-		// 확정적으로 싸이클 구조의 데드락 발생
 		if (_finished[there] == false)
 		{
 			printf("%s -> %s\n", _idToName[here], _idToName[there]);

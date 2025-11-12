@@ -33,7 +33,6 @@ public class NetworkManager : MonoBehaviour
         }
 
         if (instance != this) return;
-        // �� Destroy �� ����ǵ�, Awake,Start �����
 
         cNetUnityService = gameObject.AddComponent<CNetUnityService>();
         cNetUnityService.Connect(remoteEndPoint, 7777);
@@ -121,7 +120,6 @@ public class NetworkManager : MonoBehaviour
                     string loginId = msg.Pop_String();
                     if (File.Exists(loginPath))
                     {
-                        Debug.LogError("�̹� ������ �ִµ� �������̵� �õ�?");
                     }
 
                     File.WriteAllText(loginPath, loginId);
@@ -135,7 +133,6 @@ public class NetworkManager : MonoBehaviour
                 break;
             case S.S_LOGIN_FAILED:
                 {
-                    Debug.LogError("�α��� ����");
                 }
                 break;
             case S.S_ENTER_GAME:

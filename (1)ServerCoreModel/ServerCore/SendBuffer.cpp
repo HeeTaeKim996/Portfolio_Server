@@ -37,7 +37,7 @@ SendBufferChunk::SendBufferChunk()
 SendBufferChunk::~SendBufferChunk()
 {
 	{ // DEBUG
-		//cout << "SendBuffer.cpp__DEBUG : SendBufferChunk 소멸자 발동" << endl;
+		//cout << "SendBuffer.cpp__DEBUG : SendBufferChunk " << endl;
 	}
 }
 
@@ -126,6 +126,6 @@ void SendBufferManager::PushGlobal(SendBufferChunk* buffer)
 	
 
 #ifdef _DEBUG
-	cout << "SendBuffer.cpp__DEBUG : SendBufferChunk가 chunks 로 push_back " << endl;
+	//cout << "SendBuffer.cpp__DEBUG : SendBufferChunk chunks  push_back " << endl;
 #endif // _DEBUG
 }

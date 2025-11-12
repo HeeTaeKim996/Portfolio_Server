@@ -16,12 +16,10 @@ public class LoosePivot : Pivot
 
     public void Wobble()
     {
-        Debug.Log("Wobble 애니매이션 예정");
     }
 
     public void Drop()
     {
-        Debug.Log("Drop 애니매이션 예정");
         Destroy(gameObject);
     }
 

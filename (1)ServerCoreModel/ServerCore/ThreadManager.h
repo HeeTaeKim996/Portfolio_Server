@@ -1,9 +1,7 @@
 /* -------------------------------------
 	  (1)ServerCoreModel_250522
 --------------------------------------*/
-
 #pragma once
-
 #include <thread>
 #include <functional>
 
