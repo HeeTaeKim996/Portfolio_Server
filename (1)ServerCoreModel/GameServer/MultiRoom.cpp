@@ -126,10 +126,6 @@ MultiRoom::MultiRoom(CapsuleRoomRef firstRoom, CapsuleRoomRef secondRoom)
 
 	first.clientSession->Send(sendBuffer);
 	second.clientSession->Send(sendBuffer);
-
-
-
-	
 }
 
 MultiRoom::~MultiRoom()
@@ -201,7 +197,7 @@ void MultiRoom::Multi_OnMergeRoomFinished(ClientSessionRef client, BYTE* buffer,
 	}
 	else
 	{
-		// Ŭ���̾�Ʈ���� Attached Pivot �� Null�̹Ƿ�, ������ �ʿ� ����
+		
 	}
 
 	
@@ -255,85 +251,6 @@ void MultiRoom::OnExitGame(ClientSessionRef client)
 	splitCause = SplitCause::PLAYER_EXIT;
 	SplitRoom(remainClient);
 
-
-
-
-
-	/*
-	UINT64 remainId = remainClient->PlayerId();
-
-
-
-
-
-	DeleteHeightObject(_players[remainId]->GetPos().y);
-
-	Vector<RetrieveLog> logs;
-	logs.resize(E_CAPSULE_HEIGHT_POOL_MAX_COUNT);
-	Vector<HeightObjectRef> transferPivots;
-	transferPivots.resize(E_CAPSULE_HEIGHT_POOL_MAX_COUNT);
-	UINT8 makingPivotIndex = 0;
-	UINT8 copyinPivotIndex = _leastHeightIndex;
-
-	UINT8 lastSearchIndex = _maxHeightIndex + 1;
-	if (lastSearchIndex >= E_MULTI_HEIGHT_POOL_MAX_COUNT)
-	{
-		lastSearchIndex = 0;
-	}
-
-
-	float remainPos = _players[remainId]->GetPos().y;
-
-	while (makingPivotIndex < E_CAPSULE_HEIGHT_POOL_MAX_COUNT - 4 && copyinPivotIndex != lastSearchIndex)
-	{
-		if (_heightObjects[copyinPivotIndex] != nullptr
-			&& _heightObjects[copyinPivotIndex]->OwnerId() != client->PlayerId())
-		{
-			if (_heightObjects[copyinPivotIndex]->GetPos().y < remainPos + Room::MAKING_PIVOT_MIN_FLOAT)
-			{
-				transferPivots[makingPivotIndex] = _heightObjects[copyinPivotIndex]->Clone();
-				transferPivots[makingPivotIndex]->SwitchIndex(makingPivotIndex);
-
-				RetrieveLog retrieveLog{ copyinPivotIndex, makingPivotIndex };
-				logs[makingPivotIndex] = retrieveLog;
-
-
-				makingPivotIndex++;
-			}
-		}
-
-		if (++copyinPivotIndex >= E_MULTI_HEIGHT_POOL_MAX_COUNT)
-		{
-			copyinPivotIndex = 0;
-		}
-	}
-
-	RetrievingRoomStruct retrievingRoomStruct(transferPivots, --makingPivotIndex);
-
-
-	if (CapsuleRoomRef capsuleRoom = _capsuleRooms[remainId].lock())
-	{
-		capsuleRoom->RetrievePlayer(retrievingRoomStruct, static_pointer_cast<MultiRoom>(shared_from_this()));
-	}
-
-
-	SendBufferRef sendBuffer = GSendBufferManager->MakeSendBuff();
-	{
-		FlatBufferWriter fbw(sendBuffer, S_SPLIT_ROOM);
-
-		fbw.Write<UINT8>(++makingPivotIndex); // PivotLength (���̴� �߰� ++)
-		for (int i = 0; i < makingPivotIndex; i++)
-		{
-			fbw.Write<UINT8>(logs[i].previousIndex); // Previous Index
-			fbw.Write<UINT8>(logs[i].newIndex); // New Index
-		}
-	}
-
-	remainClient->Send(sendBuffer);
-
-	*/
-
-	
 }
 
 
@@ -671,10 +588,4 @@ void MultiRoom::SplitRoom(ClientSessionRef client)
 	}
 
 	client->Send(sendBuffer);
-
-
 }
-
-
-
-

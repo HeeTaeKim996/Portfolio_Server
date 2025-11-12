@@ -31,8 +31,6 @@ namespace CSharpServerCore
                     if (!completed) return;
 
                     _quantityToRead = (int)BitConverter.ToUInt16(_messageBuffer);
-                    // ※ C++서버에서는 header를 UInt16으로 줌. 
-                    //   Buffer.BlockCopy는 정수 인자를 uint16이 아닌 int로 받기 때문에, 위처럼 형변환
                 }
 
                 completed = ReadUntil(TcpBuffer, ref srcPosition, offset, transferred);

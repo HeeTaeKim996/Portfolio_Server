@@ -50,16 +50,6 @@ namespace CSharpServerCore
             Buffer.BlockCopy(BitConverter.GetBytes((UInt16)pos), 0, buffer, 0, 2);
         }
 
-        /* ※ C++ 서버에서 패킷 맨 앞에 uint16 size; uint16 id; 로 구성된 사이즈 4의 PacketHeader 구조체를 받음
-             하단은 구조체 복붙 내용
-
-        struct PacketHeader
-        {
-            uint16 size;
-            uint16 id; // PROTOCOL
-        }; 
-         */
-
 
         public static void PushBack(CPacket packet)
         {
@@ -191,16 +181,6 @@ namespace CSharpServerCore
             Buffer.BlockCopy(dataBuffer, 0, buffer, pos, len);
             pos += len;
         }
-        //public void PushDynamic<T>(T data) where T : struct
-        //{
-        //    byte[] pushBuffer = BitConverter.GetBytes((dynamic)data);
-        //    UInt16 size = (UInt16)System.Runtime.InteropServices.Marshal.SizeOf<T>();
-        //    Buffer.BlockCopy(pushBuffer, 0, buffer, pos, size);
-        //    pos += size;
-        //    // ※ 제네릭의 dnymaic 사용시, 런타임 때 판별하기 때문에, 위 byte, float, ints, string 오버로드가 
-        //    //   사용되지 못하고, 연산효율이 안좋은 위 dynamic만 사용될 수 있기 때문에, 매서드명을 다르게함
-        //}
-
 
 
 

@@ -58,7 +58,6 @@ namespace CSharpServerCore
         private void StartSend()
         {
             lock (lock_sendingQueue) 
-        // ※ Send - StartSend 에서 데드락이 발생안하는 이유는, C#의 lock 이 동일 스레드 내에서는 재진입이 가능하기 때문
             {
                 CPacket peekedPacket = sendingQueue.Peek();
                 peekedPacket.RecordSize();

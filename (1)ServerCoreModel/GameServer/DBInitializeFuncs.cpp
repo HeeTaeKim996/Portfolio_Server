@@ -9,7 +9,7 @@ void DBInitializeFuncs::InitializeSettings()
 
 void DBInitializeFuncs::InitializeUserInfoTable()
 {
-	cout << "��� user_info Table�� �����ϴ°� �½��ϱ�? '��' �� ������ ���� ������ ���� �� �����" << endl;
+	cout << "Sure You Want To Delete DB? " << endl;
 	cout << "-> ";
 	string ans;
 	cin >> ans;

@@ -294,7 +294,6 @@ void Room::CreateHeightObject(float currentHeight, UINT32 score)
 
 void Room::DeleteHeightObject(float currentHeight)
 {
-
 	while (true)
 	{
 		if (_heightObjects[_leastHeightIndex] == nullptr)
@@ -310,7 +309,6 @@ void Room::DeleteHeightObject(float currentHeight)
 		{
 			break;
 		}
-
 
 		SendBufferRef sendBuffer = GSendBufferManager->MakeSendBuff();
 		{
@@ -634,10 +632,7 @@ void Room::DeleteLoosePivotAfterTime(UINT8 index)
 			return;
 		}
 
-
 		_heightObjects[index] = nullptr;
-
-
 
 
 		Vector<std::pair<UINT64, UINT8>> droppingPlayerLog;
@@ -1156,9 +1151,3 @@ void Room::Handle_ANNOUNCE_IDLE(ClientSessionRef client, BYTE* buffer, int32 len
 
 	player->SwitchPlayerState(PS_Idle);
 }
-
-
-
-
-
-
