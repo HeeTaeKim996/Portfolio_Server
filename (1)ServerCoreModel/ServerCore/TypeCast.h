@@ -1,30 +1,12 @@
-/*-----------------------------------------
-		�ڵ� ���ۼ� ���ϰ� �׳� ����
------------------------------------------*/
-
-
-
 #pragma once
 
 #include "Types.h"
 
 
-// static_cast�� �������� ����(����ȯ �õ��� ���н� ���� �߻�). dynamic_cast�� ĳ��Ʈ ���н�
-// ������ �ƴ� nullptr�� ����. dynamic_cast�� ������ ���� ������ ����
-// TypeCast �Ʒ� �ڵ�� ��Ÿ���� �ƴ� ������ �� ������ �߻��ϵ��� �ϴ�, ������? �� ���� ����ȯ
-// �� ���� �ڵ�
-
-// �� ������ ���� ����. ���� �����ϸ� ��Ÿ���� �ƴ� ������ �� ������ �߻��ϵ��� ����� �ڵ�
-//   -> ��Ÿ�ӿ��� �����ϴ� �ڵ� (for.. ) �� ������� �ʰ�, template�� ����Լ� �� �����,
-//      �����Ͽ��� ����ȯ ������ �߰��ϵ��� �ϴ� �ڵ�.
-
-// �� �Ʒ�ó�� template �� Ȱ���Ͽ� ������ �� ������ ������ �ϴ� ����� ������, 
-//   Moderen C++ å? (����å�̶� ��) �� �����ϴ� �� ���� ��	
 
 #pragma region TyeList
 template<typename...T>
 struct TypeList;
-// ���� ����� ����� ����
 
 template<typename T, typename U>
 struct TypeList<T, U>
@@ -40,8 +22,6 @@ struct TypeList<T, U...>
 	using Head = T;
 	using Tail = TypeList<U...>;
 };
-// ��� ȣ���� ���� ����. TypeList<A, B, C> => TypeList<A, TypeList<B, C>> 
-
 
 #pragma endregion
 
@@ -82,9 +62,6 @@ struct TypeAt<TypeList<Head, Tail...>, index>
 	using Result = typename TypeAt<TypeList<Tail...>, index - 1>::Result;
 };
 	 
-// => ���������� ���ȣ��. 
-//  using TL = TyeList<Mage, Knight, Archer>;
-//  TypeAt<TL, 2>::Result = TypeAt< TypeList<Knight, Archer>, 1> = TypeAt<Archer, 0> = Archer
 #pragma endregion
 
 
@@ -116,11 +93,7 @@ public:
 	enum { value = (temp == -1) ? -1 : temp + 1 };
 
 };
-// => Header�� ã�� T�� ������ 0 ��ȯ. T�� TL�� �ƾ� ���ٸ� -1 ��ȯ.
-//    �� �� �ƴҽ�, ���ȣ��� index ã��. temp���� Head�� �߶�, �������� ��� ȣ��.
-//    ��� ȣ��� ���� temp ���� -1�Ͻ�, 1 ��ȯ. -1�� �ƴҽ�, ��� ȣ�⿡�� ������ + 1��
-//    �ݺ��Ͽ�, value�� ��ȯ. 
-// (Header�� �ڸ��� ���ȣ�⿡�� Index�� -1 �� �и��Ƿ�. value���� ������ +1 �� ���? ȣ���Ͽ� ��ȯ) 
+
 #pragma endregion
 
 
@@ -133,10 +106,8 @@ private:
 	using Big = __int32;
 
 	static Small Test(const To&) { return 0; }
-	static Big Test(...) { return 0; } // ���⼭ ... �� '�ƹ� Ÿ���̳� �޴´�' �� �ǹ�
+	static Big Test(...) { return 0; }
 	static From MakeFrom() { return 0; }
-
-	// �� �� �Լ��� { } (����)�� ��� �ȴ�. Conversion�� �Լ� �����ε��� ������ �̿��� ���̱� ����
 
 public:
 	enum
@@ -145,30 +116,12 @@ public:
 	};
 };
 
-// => �Լ��� �����ε� ������ �̿��� �ڵ�.
-//    ���÷�, 
-//    1) Coversion<Player, Knight>:: exists
-//     -> MakeFrom() -> Player. Test(Player) -> Small Test(const Knight&) ȣ��.
-//     -> Small ��ȯ. -> exists = sizeof(Small) == sizeof(Small). -> True ��ȯ.
-
-//    2) Conversion<Knight, Player>:: exists
-//     -> MakeFrom() -> Knight. Test(Knight) -> Big Test(...) ȣ��.
-//       ( !! �Ű������� ���ڿ� ��ĳ���� �Ұ�)
-//     -> Big ��ȯ. -> exists = sizeof(Big) == sizeof(Small) -> False ��ȯ.
-
-//    3) Conversion<Knight, Dog>::exists
-//      -> 2)�� ���� ������ false ��ȯ
 #pragma endregion
 
 
 
 
 #pragma region TypeCast
-
-// �Ʒ� s_convert[i][j] �� for������ ó������ �ʰ�, �Ʒ� �ڵ��ó�� ��� ���ȣ��� ó���ϴ� ������, 
-// �Ʒ� �ڵ�� ������� ���Ǵ� s_convert[i][j]�� ��Ÿ���� �ƴ� ������ Ÿ�� ������ ������� 
-// ���̺��� �����ϱ� ����
-
 
 template<int32 v>
 struct Int2Type
@@ -200,13 +153,7 @@ public:
 		s_convert[i][j] = Conversion<const FromType*, const ToType*>::exists ?
 			true : false;
 #pragma region FromType*, ToType* ���� pt �� �ִ� ����
-		// - �켱 A*, B*�� pt�� unsigned int�� �޸� �ּ� ���� �Ӹ� �ƴ�, A, B�� Ŭ���� ����?��
-		//   ��� �ִ�.
-		//  -> A*, B* �� ���ؼ� A�� B�� ��Ӱ��������� �� �� �ִ�.
 
-		// - FromType, ToType�� �ƴ� FromType*, ToType* �� ������, �� �ڵ���� ������ Ÿ�� ����
-		//   ������� ��ȯ ���� ������ �˷��ִ� ����� �ϴµ�, pt ������� �񱳸� �ؾ� ������ Ÿ��
-		//   ���� ������� �񱳰� �����ϱ� �����̶� �Ѵ�. (From ����Ƽ)
 #pragma endregion
 
 
@@ -214,14 +161,12 @@ public:
 		MakeTable(Int2Type<i>(), Int2Type<j + 1>());
 	}
 
-	// �� ���ȣ�⿡�� Int2Type<j+1> == Int2Type<length>�� �� ȣ��
 	template<int32 i>
 	static void MakeTable(Int2Type<i>, Int2Type<length>) 
 	{
 		MakeTable(Int2Type<i + 1>(), Int2Type<0>());
 	}
 
-	// �� ���ȣ�⿡�� Int2Type<i+1> == Int2Type<length> �� �� ȣ��
 	template<int32 j>
 	static void MakeTable(Int2Type<length>, Int2Type<j>)
 	{
@@ -276,8 +221,6 @@ bool CanCast(From* ptr)
 		ptr->_typeId, IndexOf<TL, remove_pointer_t<To>>::value);
 }
 
-
-// shared_ptr ���� 2 �߰�
 
 #include "Memory.h"
 

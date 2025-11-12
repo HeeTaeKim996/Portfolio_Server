@@ -54,7 +54,7 @@ public:
 	template<typename Other>
 	StlAllocator(const StlAllocator<Other>&) {}
 
-	inline T* allocate(size_t count) // ※ size_t : 32비트 시스템에서는 4바이트, 64비트 시스템에서는 8바이트
+	inline T* allocate(size_t count)
 	{
 		const int32 size = static_cast<int32>(count * sizeof(T));
 

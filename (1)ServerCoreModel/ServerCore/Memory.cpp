@@ -81,7 +81,6 @@ void* Memory::Allocate(int32 size)
 #else
 	if (allocSize > MAX_ALLOC_SIZE)
 	{
-		// 메모리 풀링 크기를 벗어나면, 일반 할당
 		memory = reinterpret_cast<MemoryEntry*>(_aligned_malloc(allocSize, SLIST_ALIGNMENT));
 	}
 	else

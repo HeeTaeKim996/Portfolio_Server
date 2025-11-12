@@ -3,7 +3,6 @@
 --------------------------------------*/
 
 #pragma once
-
 #include <atomic>
 
 
@@ -23,13 +22,12 @@ struct MemoryEntry : public SLIST_ENTRY
 	inline static void* AttachEntry(MemoryEntry* header, int32 size)
 	{
 		new(header)MemoryEntry(size);
-		return reinterpret_cast<void*>(++header); // ※ ++는 정수 1증가가 아닌, sizeof(MemoryEntry)만큼 증가
+		return reinterpret_cast<void*>(++header);
 	}
 
 	inline static MemoryEntry* DetachEntry(void* ptr)
 	{
 		MemoryEntry* memory = reinterpret_cast<MemoryEntry*>(ptr) - 1; 
-		// ※ 마찬가지로, -1은 정수 1감소가 아닌, sizeof(MemoryEntry) 만큼 감소
 		return memory;
 	}
 

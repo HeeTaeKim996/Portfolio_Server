@@ -23,7 +23,7 @@ using Array = array<Type, Size>;
 template<typename Type>
 using Vector = vector<Type, StlAllocator<Type>>;
 
-template<typename Key, typename Value, typename Pred = less<Key>>	// ※ less<Key> : 오름차순으로 정렬
+template<typename Key, typename Value, typename Pred = less<Key>>	
 using Map = map < Key, Value, Pred, StlAllocator<pair<const Key, Value>>>;
 
 template<typename Key, typename Pred = less<Key>>

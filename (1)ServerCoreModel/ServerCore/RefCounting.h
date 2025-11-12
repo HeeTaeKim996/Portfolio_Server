@@ -39,13 +39,10 @@ public:
 	TSharedPtr() {}
 	TSharedPtr(T* ptr) { Set(ptr); }
 
-	// 복사
 	TSharedPtr(const TSharedPtr& rhs) { Set(rhs._ptr); }
 
-	// 이동
 	TSharedPtr(TSharedPtr&& rhs) noexcept { _ptr = rhs._ptr; rhs._ptr = nullptr; }
 
-	// 자식 상속 가능
 	template<typename U>
 	TSharedPtr(const TSharedPtr<U>& rhs) { Set(static_cast<T*>(rhs._ptr)); }
 
@@ -54,8 +51,7 @@ public:
 	~TSharedPtr() { Release(); }
 
 public:
-	// 복사
-	inline TSharedPtr& operator = (const TSharedPtr& rhs) // ※ A = B = C.. 처럼 사용 대비 리턴값을 TSharedPtr&
+	inline TSharedPtr& operator = (const TSharedPtr& rhs)
 	{
 		if (_ptr != rhs._ptr)
 		{
@@ -65,7 +61,6 @@ public:
 		return *this;
 	}
 
-	// 이동
 	inline TSharedPtr& operator = (TSharedPtr&& rhs) noexcept
 	{
 		Release();
@@ -90,12 +85,6 @@ public:
 
 
 	operator T* () const { return _ptr; }
-	/* ○ operator T*
-	   - operator T* 는 operator의 특수한 문법으로,
-		 암시적으로 T* 로 변환할 수 있는 함수.
-	   - 예를 들어, TSharedPtr<A> a ( new A() ); A b = a; b->.... (a의 인스턴스 함수 호출 가능)
-	*/
-
 
 	bool IsNull() const { return !_ptr; }
 
