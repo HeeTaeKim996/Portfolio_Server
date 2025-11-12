@@ -182,7 +182,7 @@ int main()
 
 
 
-	ServerServiceRef service = MakeShared<ServerService>(NetAddress(L"172.16.101.109", 7777),
+	ServerServiceRef service = MakeShared<ServerService>(NetAddress(L"192.168.168.29", 7777),
 		MakeShared<IocpCore>(), []()
 		{
 			return ObjectPool<ClientSession>::MakeShared();
