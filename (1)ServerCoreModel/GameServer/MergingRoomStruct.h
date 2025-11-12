@@ -10,10 +10,6 @@ public:
 		maxHeightIndex(inputMaxHeightIndex), leastHeightIndex(inputLeastHeightIndex), 
 		ownerId(inputOwnerId)
 	{
-		/*   ※ Player, Pivot의 RefCount 보장
-			- shared_ptr을 복사했기 때문에, MultiRoom에서 _pivots를 하나로 병합할 때에, CapsuleRoom에서 _pivot 중 하나를
-			  삭제해도, MergingRoomStruct로 인해 refCount > 0 이기 때문에, delete되지 않는다
-		*/
 	}
 
 	ClientSessionRef clientSession;

@@ -4,26 +4,16 @@
 #include "Service.h"
 #include "Session.h"
 #include "ClientSession.h"
-
 #include "ClientSessionManager.h"
-
 #include "FlatBufferWriter.h"
-
 #include "ClientPacketHandler.h"
-
 #include "Job.h"
-
 #include "Room.h"
-
-
 #include "ObjectPool.h"
-
 #include "Lobby.h"
-
 #ifdef _MEMORY_COUNT
 #include "MemoryCount.h"
 #endif 
-
 #include "DBInitializeFuncs.h"
 
 void DBSample()
@@ -56,26 +46,11 @@ void DBSample()
 			cout << db.Res()->getString("wchar_sample").c_str() << endl;
 		}
 	}
-
-
-	//{
-	//	DB db = DB::Pop();
-
-	//	db.Pstmt() = db.Con()->prepareStatement
-	//	("INSERT INTO sampletable (int_sample, wchar_sample) VALUES (?, ?)");
-
-	//	db.Pstmt()->setInt(1, 5);
-	//	db.Pstmt()->setString(2, "Bye Again");
-
-	//	db.Pstmt()->executeUpdate();
-	//}
 }
 
 enum : uint64
 {
 	GLOBAL_QUEUE_MONITORING_TICK = 64,
-	// 이 값을 하드코딩이 아닌, 처리하는 Job의 시간이 길어질수록, 이 값을 더 높게, 자동 보정하는 코드를
-	// 만들 수도 있음
 };
 
 
@@ -85,16 +60,10 @@ void DoWorkerJob(ServerServiceRef& service)
 	{
 		LEndTickCount = ::GetTickCount64() + GLOBAL_QUEUE_MONITORING_TICK;
 
-		// 네트워크 입출력 처리 -> 인게임 로직(패킷 핸들러에 의해)
 		service->GetIocpCore()->Dispatch(10);
-		// time out을 10ms로 두어, GetQeueCompletionStatus가 10ms경과시, false로 처리되어, 빠져나오게함
 
-
-		// 예약된 일감 처리
 		ThreadManager::DistributeReservedJobs();
 
-
-		// 글로벌 큐 
 		ThreadManager::DoGlobalQueueWork();
 	}
 }
@@ -108,13 +77,6 @@ void DoMainThreadWorkJob(ServerServiceRef& service)
 		if (GetTickCount64() > mainThreadTickCount + 1'000)
 		{
 			{
-				/*
-				cout << "Total(" << GSessionManager->PlayersCount() << ") / "
-					<< "Lobby(" << GLobby->GetLobbysPlayersCount() << ") / "
-					<< "RoomsAllPlayer(" << GLobby->GetAllRoomsPlayersCount() << ") / "
-					<< "RoomCount(" << GLobby->CapsuleRoomCount() << ") "
-					<< endl;
-					*/
 #ifdef _MEMORY_COUNT
 				cout 
 					<< "ClientSession(" << MemoryCount::ClientSessionCount() << ") / "
@@ -201,7 +163,7 @@ int main()
 
 
 
-	DoMainThreadWorkJob(service); // 메인스레드도 일하기
+	DoMainThreadWorkJob(service); // Main Thread Also Work
 
 
 	GThreadManager->Join();
