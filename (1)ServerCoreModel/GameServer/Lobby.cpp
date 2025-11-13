@@ -120,11 +120,13 @@ void Lobby::InformLobbyInfos()
 /*---------------------
 	  RoomMatching
 ---------------------*/
+
+
 void Lobby::Match(CapsuleRoomRef matchingRoom, UINT32 score)
 {
 	for (auto it = _matchingRooms.begin(); it != _matchingRooms.end(); it++)
 	{
-		if (std::abs((INT32)(score - it->second)) < 20)
+		if (::abs((INT32)(score - it->second)) < 20)
 		{
 			if (CapsuleRoomRef room = it->first.lock())
 			{

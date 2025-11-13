@@ -116,7 +116,7 @@ void DoMainThreadWorkJob(ServerServiceRef& service)
 
 
 
-void Init()
+void Init(string password)
 {
 	if (E_MULTI_HEIGHT_POOL_MAX_COUNT >= 255 || E_CAPSULE_HEIGHT_POOL_MAX_COUNT >= 255)
 	{
@@ -128,23 +128,26 @@ void Init()
 	Lobby::Init();
 	
 	ClientPacketHandler::Init();
-	GDBConnectionPool->Init("tcp://127.0.0.1:3306", "root", "kimht085213!", "flying_monkeys", 1);
+	GDBConnectionPool->Init("tcp://127.0.0.1:3306", "root", password.c_str(), "flying_monkeys", 1);
 	
 }
 
 
 int main()
 {
-	Init();
+	string password;
 
-	//DBInitializeFuncs::InitializeUserInfoTable();
+	printf("DB Password : ");
+	cin >> password;
+	Init(password);
+	printf("\n");
 	
 	DBInitializeFuncs::InitializeSettings();
 	DBInitializeFuncs::InitializeFuncs();
 
 
 
-	ServerServiceRef service = MakeShared<ServerService>(NetAddress(L"192.168.168.29", 7777),
+	ServerServiceRef service = MakeShared<ServerService>(NetAddress(L"172.30.1.97", 7777),
 		MakeShared<IocpCore>(), []()
 		{
 			return ObjectPool<ClientSession>::MakeShared();
